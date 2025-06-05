@@ -4,6 +4,9 @@ import Trash from '../../src/assets/lixo1.svg'
 import api from '../../src/services/api'
 import { use } from 'react'
 import "./styles.css"
+import { toast } from 'react-toastify'
+import { isAxiosError } from 'axios'
+import { pegarErroDeValidacao } from '../../src/utils/error.utils'
 
 function Home() {
   const [user, setUser] = useState([])
@@ -22,15 +25,28 @@ function Home() {
 
   // envio de informações para o servidor prisma
   async function createUsers() {
-    await api.post('/usuarios', {
-      nome: inputNome.current.value,
-      setor: inputSetor.current.value,
-      lider: inputLider.current.value,
-      posicao: inputPosicao.current.value,
-      telefone: inputTelefone.current.value
-    })
+    try {
+      const result = await api.post('/usuarios', {
+        nome: inputNome.current.value,
+        setor: inputSetor.current.value,
+        lider: inputLider.current.value,
+        posicao: inputPosicao.current.value,
+        telefone: inputTelefone.current.value
+      })
 
-    getUsers()
+      console.log("result: " + JSON.stringify(result))
+      getUsers()
+
+      const data = result.data
+
+      toast.success(`Cadastro de ${data.nome} realizado com sucesso`)
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const message = pegarErroDeValidacao(error)
+        toast.error(message)
+      } else
+        toast.error("Erro no cadastro")
+    }
   }
 
   // deletar usuários do sistema 
