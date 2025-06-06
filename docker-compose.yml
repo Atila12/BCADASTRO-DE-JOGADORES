@@ -4,6 +4,8 @@ services:
   app:
     container_name: cadastrousuario
     restart: always
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // passando o caminho da api
 const api = axios.create({
-    baseURL:'http://srv574063.hstgr.cloud:3001/'
+    baseURL: import.meta.env.VITE_API_URL
 })
 
 export default api

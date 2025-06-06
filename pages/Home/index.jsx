@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react'
 import Trash from '../../src/assets/lixo1.svg'
 //import "../../src/assets/imagem_fundo.png"
 import api from '../../src/services/api'
-import { use } from 'react'
 import "./styles.css"
 import { toast } from 'react-toastify'
 import { isAxiosError } from 'axios'
